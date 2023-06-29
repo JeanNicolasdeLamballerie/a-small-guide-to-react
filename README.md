@@ -2,15 +2,31 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Create React App is a simple CLI that creates a React project and allows you to run it, or build it.
+More info on how to do that below in the *Available Scripts* section.
 
 
-What is necessary for this to run :
 
-npm (node package manager, used 7.24.0)
-node (v16.10.0 was used to make this, but anything should work)
-see https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+What is necessary for this project to run :
 
-## Available Scripts
+- npm (node package manager, used 7.24.0)
+
+- node (v16.10.0 was used to make this, but anything should work)
+
+- typescript depending on setup https://www.typescriptlang.org/id/download. The package is included in the package.json, so it shouldn't be necessary, but you might need an extension to support the language (E.G VS Code's extension for languages)
+
+- see [how to install node-js & npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+
+This is designed to be an introduction to various concept within React.
+
+## 1) Available Scripts
+
+Scripts are handled by NPM : they can be a local script running, a CLI, a command, being run in the console. You can declare them in the package.json file.
+Some words are reserved to be directly used after `npm` : in particular, `npm start` & `npm test`. 
+For other "custom" scripts, after declaring them in your package.json, you should run `npm run [yourscriptname]`.
+
+
 
 In the project directory, you can run:
 
@@ -52,3 +68,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## 2) How to read the contents
+
+### The concept
+Each section of the website is meant to be seen (and possibly altered) while having the corresponding files opened.

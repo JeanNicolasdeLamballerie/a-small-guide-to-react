@@ -1,3 +1,5 @@
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 import React, { useEffect, useState, useRef } from "react";
 const INITIAL_VALUE = 0;
 
@@ -74,15 +76,15 @@ export default function StatefulComponent () {
     return (
         <div>
             <p>current state : { someState }. It was last modified { timestamp } seconds ago.</p>
-            <button onClick={ onClickAdd }>
+            <Button onClick={ onClickAdd } variant="contained" color={ "primary" } style={ { margin: '10px' } }>
                 ADD
-            </button>
-            <button onClick={ onClickRemove }>
+            </Button>
+            <Button style={ { margin: '10px' } } onClick={ onClickRemove } variant="contained" color={ "secondary" }>
                 REMOVE
-            </button>
+            </Button>
             <div>
-                <input type="number" onChange={ onChange } />
-                <button onClick={ ( e ) => {
+                <TextField color="success" type="number" variant={ 'outlined' } label={ 'Enter a custom value' } onChange={ onChange } sx={ { input: { color: 'white' }, label: { color: '#2e7d32' } } } />
+                <Button style={ { margin: '10px' } } variant="contained" color={ "success" } onClick={ ( e ) => {
                     if ( inputValue.current !== null && inputValue.current !== undefined )
                     {
 
@@ -92,7 +94,7 @@ export default function StatefulComponent () {
                 }
                 }>
                     add or remove custom value
-                </button>
+                </Button>
 
             </div>
         </div>

@@ -1,0 +1,22 @@
+.grid-container {
+    display: grid;
+
+}
+
+.grid-container-2 {
+    grid-template-columns: auto auto;
+}
+
+.grid-2-item-fullwidth {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.grid-animated {
+    display: grid;
+    transition: grid-template-rows 500ms ease-in,
+}
+
+.grid-animated * {
+    overflow: hidden
+}

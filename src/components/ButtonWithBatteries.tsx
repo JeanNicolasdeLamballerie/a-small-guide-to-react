@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import React, { useState } from "react";
 
 type usedProps = { showInitially?: boolean, additionalText?: string; };
@@ -6,13 +7,17 @@ export default function ButtonWithBatteries ( { showInitially = false, additiona
 
 
     return ( <>
-        <button onClick={ () => { setShow( val => !val ); } }>I am a button (and component) that comes with batteries ! { show ? "Hide the info" : "Show the info" }</button>
-        { show && <div>
-            <p>A component "with batteries" is a component that manages its own state. You can pass it initial values, or have functions that you can pass that will receive the state of this button, but if you let it be, it'll manage it's own lifecycle alone, without a need for you to inject your own state, or interact with/modify its state.
-            </p>
+        <Button variant='outlined' color='warning' onClick={ () => { setShow( val => !val ); } }>I am a button (and component) that comes with batteries ! { show ? "Hide the info" : "Show the info" }</Button>
+        <div className="grid-animated" style={ { gridTemplateRows: show ? '1fr' : '0fr' } }>
 
-            { additionalText && <p> This is the additional text attached: { additionalText }</p> }
-        </div> }
+            <div  >
+                <p>A component "with batteries" is a component that manages its own state. You can pass it initial values, or have functions that you can pass that will receive the state of this button, but if you let it be, it'll manage it's own lifecycle alone, without a need for you to inject your own state, or interact with/modify its state.
+                </p>
+
+                { additionalText && <p> This is the additional text attached: { additionalText }</p> }
+            </div>
+
+        </div>
 
     </> );
 

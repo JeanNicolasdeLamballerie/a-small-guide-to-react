@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  frontend:
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./:/var/app
+      - /var/app/node_modules

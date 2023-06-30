@@ -7,11 +7,38 @@ More info on how to do that below in the *Available Scripts* section.
 
 
 
-What is necessary for this project to run :
 
-- npm (node package manager, used 7.24.0)
+Note : Create React App was recently depreciated for multiple - more or less acceptable - reasons.
+It is still fully functional, but using Vite or something like Next.js is now recommended over using a CRA configuration. This should not affect your experience with this project in any way, but should be kept in mind for your future adventures.
 
-- node (v16.10.0 was used to make this, but anything should work)
+Note² : If you end up running a NPM install on the project and see a bunch of security vulnerabilities pop up, do not worry; they're issues contained within the compiler/builder of CRA.
+These files NEVER make it into production, and these errors can be safely ignored. Almost every React App compiler will have some vulnerability issues within them.
+# Two ways to run this project 
+
+
+
+## 1) Without installation of node/npm
+
+This project comes with a Docker configuration that allows you to use and modify the files without needing to install any Javascript tools.
+It is still heavily recommended to use an extension for JS and Typescript to analyze the code structure.
+
+Step 1 : Unzip the node_modules.7z archive into the root folder; you should now have a node_modules folder.
+This folder holds the libraries installed in the project. It is not normally committed in any way but locally installed with the command `npm install` that parses the package.json file and installs the necessary files.
+You wouldn't need to keep it in your project as it could lead to git conflicts, and a simple command would give you the latest (or specific) version of the library you want.
+But we want our code editor to be able to recognise the imports in the files even if you don't have npm/node installed, so I included these files for convenience.
+
+Step 2 : That's it ! Run `docker compose up` and open your browser at the address http://localhost:3000/. 
+The development server is now running; whenever you make a modification and save it, the website will hot-reload and take your changes into account.
+
+Note : This isn't adapted to production. You will want to bundle your project before deploying it; most likely through a `build` command.
+
+## 2) With node/npm installed
+
+What is necessary for this project to run locally :
+
+- npm (node package manager, used 9.5.1)
+
+- node (v18.16.1 was used to make this, but anything should work)
 
 - typescript depending on setup https://www.typescriptlang.org/id/download. The package is included in the package.json, so it shouldn't be necessary, but you might need an extension to support the language (E.G VS Code's extension for languages)
 
@@ -19,6 +46,16 @@ What is necessary for this project to run :
 
 
 This is designed to be an introduction to various concept within React.
+
+
+# How does this work ?
+
+## The concept
+Each section of the website is meant to be seen (and possibly altered) while having the corresponding files opened in your favourite IDE/ Code Editor (VS Code being recommended).
+## So what do I do ?
+Start the development server and check out the main page. I'd recommend starting with interacting with the Cheatsheet through the website for some basic information about javascript - don't bother about Cheatsheet.tsx too much for now. Once you're feeling warmed up, try moving on to the actual chapters. Start with Components and Props and move from there - You'll find the relevant code in AboutComponent.tsx and AboutProps.tsx in the "pages"  folder. There will be relevant custom components being imported in the files; don't hesitate to check those out (Most of them are in, unsurprisingly, the components folder).
+## Maybe more importantly : have fun !
+
 
 ## 1) Available Scripts
 
@@ -70,7 +107,4 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 
-## 2) How to read the contents
 
-### The concept
-Each section of the website is meant to be seen (and possibly altered) while having the corresponding files opened.

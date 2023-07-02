@@ -148,12 +148,149 @@ const thirdValue = `
 
 `;
 
-type indicator = '1' | '2' | '3';
+type indicator = '1' | '2' | '3' | '4';
 
+const fourthValue = `
+// About type coercion, and using logical operators in JS/React
+//To begin with, keep in mind that == is a lot less reliable than ===. Always use === for comparing, unless you specifically need the syntax.
+const a= [];
+const b = "";
+console.log( a == b ); //true
+console.log( a === b ); //false
+// you also have access to the && operator (do not confuse it with &, which is a bit operator) for AND statements:
+if ( true && true )
+{
+    console.log( 'AND operator true & true' );
+
+}
+if ( false && true )
+{
+    //doesn't execute
+}
+if ( true && false )
+{
+    //doesn't execute
+}
+
+//We can do the same with the OR operator, ||.
+
+// But they can be used beyond that scope of booleans thanks to the truthy and falsy concepts.
+// A falsy value is any of these : 
+const falsyValues = [ "", 0, null, undefined, NaN ];
+// Any other value would be truthy.
+const truthyExamples = [ {}, [], 42, "0", "false", new Date(), -42, 3.14, Infinity, -Infinity, ];
+// let's iterate over our arrays and test the values with a function :
+
+const truthyFalsyTester = ( array ) => {
+    //we take an array, and for each value test whether they're true or false.
+    array.forEach( ( value, index ) => {
+        if ( value )
+        {
+            console.log( \`The value at index \${ index } is equivalent to a 'true' statement.\`, value );
+        }
+        else if ( !value )
+        {
+            console.log( \`The value at index \${ index } is equivalent to a 'false' statement.\`, value );
+
+        }
+    } );
+
+};
+truthyFalsyTester( falsyValues );
+truthyFalsyTester( truthyExamples );
+
+
+
+// This can be both useful and a trap. See :
+
+const userProfile = { name: 'Solo', firstName: 'Han' };
+const returnCustomMessage = ( profile ) => {
+    return profile ? \`Welcome back to our website, \${ profile.firstName } \${ profile.name } !\` : 'Welcome stranger, login below !';
+};
+console.log( userProfile, returnCustomMessage( userProfile ) );
+console.log( undefined, returnCustomMessage() );
+// But this can also turn into an issue if you forget how these values work.
+// E.G, the most classic example, the oversight of 0 : 
+const someUserID = 1;
+const anotherUserID = 0;
+const noUser = undefined;
+
+
+const doingSomethingImportant = ( profileID ) => {
+    //do some stuff...
+    if ( profileID )
+    {
+        // do something very important...
+        console.log( \`Hello, user with ID \${ profileID }\` );
+    }
+    else
+    {
+        // User is not logged in... redirect them, do not allow the action to complete...
+        console.log( 'Hello there, general not logged in.' );
+    }
+};
+//TEST
+
+doingSomethingImportant( someUserID ); // All good ! Our user is connected !
+doingSomethingImportant( noUser ); // All good ! Our user is recognised as not connected. 
+doingSomethingImportant( anotherUserID ); // Oh-oh... The falsy statement of 0 has given us an unwanted behavior.
+
+// how do we fix this ?
+
+// Two ways. One, be aware of how you use the values and coerce them if necessary.
+
+const someUserID_corrected = someUserID.toString();
+
+const anotherUserID_corrected = anotherUserID + ""; // this is equivalent.
+// you could even write (...) = \`\${anotherUserID}\`
+
+const noUser_corrected = noUser; // undefined. No need to change this
+
+//TEST
+
+doingSomethingImportant( someUserID_corrected ); // All good ! Our user is connected !
+doingSomethingImportant( noUser_corrected ); // All good ! Our user is recognised as not connected. 
+doingSomethingImportant( anotherUserID_corrected ); // Success! We fixed the bug !
+
+// Or, depending on the usecase - we might not want to confusingly change the types, or may not know them in advance.
+// So we can fix the testing inside the function instead:
+
+const doingSomethingImportant_theBugWasBehindTheKeyboard = ( profileID) => {
+    //do some stuff...
+    const hasProfileID = ( profileID !== undefined ) && ( profileID !== null );
+    if ( hasProfileID )
+    {
+        link();
+        // do something very important...
+        console.log( \`Hello, user with ID \${ profileID }\` );
+    }
+    else
+    {
+        // User is not logged in... redirect them, do not allow the action to complete...
+        console.log( 'Hello there, general not logged in.' );
+    }
+};
+// If you do this often, you might just want to just create an util function that returns that for any value.
+
+doingSomethingImportant_theBugWasBehindTheKeyboard( someUserID ); // All good ! Our user is connected !
+doingSomethingImportant_theBugWasBehindTheKeyboard( noUser ); // All good ! Our user is recognised as not connected. 
+doingSomethingImportant_theBugWasBehindTheKeyboard( anotherUserID ); // Success! We fixed the bug !
+//Inside React TSX components, you can do stuff like 
+// <SomeComponent>
+// {
+// title && <p> {title} <p/>
+// this will render only if title exists, otherwise there'll be nothing ! 
+// And if title is a state, it'll appear when a title is added!
+// </SomeComponent>
+// }
+`;
 const CheatSheet = () => {
     const [ editorValue, setEditorValue ] = React.useState<string>( firstValue );
     const [ resultValue, setResultValue ] = React.useState<any[]>( [] );
     const [ current, setCurrent ] = React.useState<indicator>( '1' );
+    // You could optimize this greatly by using a different approach to the handling of the strings.
+    // You can try switching the data structure by using, for example, an array of strings for the values stored in the editor. 
+    // That would allow their number to be dynamically changed - retrieved from a server for example.
     const SwitchEditorValue = ( str: indicator ) => {
         if ( current === str ) return;
         let v: string;
@@ -168,6 +305,9 @@ const CheatSheet = () => {
                 break;
             case "3":
                 v = thirdValue;
+                break;
+            case "4":
+                v = fourthValue;
                 break;
             default:
                 v = firstValue;
@@ -225,7 +365,8 @@ const CheatSheet = () => {
                         textAlign: 'left',
                         margin: 20,
                         fontSize: "calc(10px + 0.5vmin)",
-                        backgroundColor: 'black'
+                        backgroundColor: 'black',
+                        overflow: 'auto'
                     } }>
                         { resultValue.map( ( element: string | Array<any> | ObjectToStringify, index ) => {
                             const style: React.CSSProperties = { whiteSpace: 'pre-wrap' };
@@ -254,6 +395,8 @@ const CheatSheet = () => {
                         <Button style={ { margin: 5 } } variant="contained" disabled={ current === '1' } color="success" onClick={ () => SwitchEditorValue( '1' ) }>Back to the basics</Button>
                         <Button style={ { margin: 5 } } variant="contained" disabled={ current === '2' } color="success" onClick={ () => SwitchEditorValue( '2' ) }>About functions</Button>
                         <Button style={ { margin: 5 } } variant="contained" disabled={ current === '3' } color="success" onClick={ () => SwitchEditorValue( '3' ) }>About destructuring</Button>
+                        <Button style={ { margin: 5 } } variant="contained" disabled={ current === '4' } color="success" onClick={ () => SwitchEditorValue( '4' ) }>About operators</Button>
+
                     </div>
                     <div id='resize-indicator' >click here to resize ➡️ </div>
                 </div>

@@ -43,6 +43,30 @@ export default function StatefulComponent () {
         };
     }, [ someState ] );
     const updateState = ( value: number = +1 ) => {
+        //One thing to remember : STATES NEED TO BE REPLACED.
+
+        // if you do this with an array state : 
+
+        // setSomeArrayState(someArray.push(someValue)) //!BAD
+
+        // The state will NOT update.
+
+        // The array "someArray" was never transformed - it's the same array, with an additional value.
+        // We need to recreate the array: 
+
+
+        // setSomeArrayState([...someArray, someValue]) //?GOOD
+        // This will work.
+
+        // This applies to object, arrays, maps.. all the complex objects.
+        // Primitives, on the other hand, are always recreated when modified, so they don't suffer of the same issues (e.g, booleans, strings, numbers..)
+
+
+
+        // If you need to use the state itself, to make sure you get an up to date version of it when the function runs, use the callback function
+        // in the State function :
+        //setSomeArray(valueOfTheState => [...valueOfTheState, someValue])
+        // It's a lot more reliable than using your actual state value.
         setSomeState( oldStateValue => oldStateValue + value );
     };
     const onClickAdd = ( event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
